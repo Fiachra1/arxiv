@@ -17,7 +17,6 @@ search = arxiv.Search(
     sort_by=arxiv.SortCriterion.SubmittedDate,
 )
 results = arxiv_client.results(search)
-
 # `results` is a generator; you can iterate over its elements one by one...
 # for r in client.results(search):
 #    if r.published.date() > datetime.date.today() + datetime.timedelta(days=-40):
@@ -26,6 +25,7 @@ results = arxiv_client.results(search)
 #        print(r.summary)
 # ...or exhaust it into a list. Careful: this is slow for large results sets.
 all_results = list(results)
+print(len(all_results))
 # print([r.title for r in all_results])
 #
 for a in range(3):
