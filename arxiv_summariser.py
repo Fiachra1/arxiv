@@ -28,9 +28,8 @@ arxiv_client = arxiv.Client()
 
 # Search for the 10 most recent articles matching the keyword "quantum."
 search = arxiv.Search(
-    #query="cat:cs.AI AND ti:quantum",
-    query="ti:AI",
-    max_results=25,
+    query="quantum",
+    max_results=20,
     sort_by=arxiv.SortCriterion.SubmittedDate
 )
 results = arxiv_client.results(search)
@@ -53,8 +52,10 @@ if len(all_results)>0:
             contents.append('Paper Title: ' + all_results[i].title + ' \n Link to paper: ' + all_results[i].entry_id)
             contents.append('Arxiv Category: ' + all_results[i].primary_category)
             contents.append(completion.choices[0].message.content)
+            print(f"Paper {i} titled {all_results[i].title} reviewed as it was published on {all_results[i].published.date()}")
+            print(completion.choices[0].message.role)
         else:
-            print("No Papers to review")
+            print(f"Paper not reviewed as it was published on {all_results[i].published.date()}")
     
     bullet_summaries = '\n\n'.join(contents)
 
@@ -66,7 +67,8 @@ if len(all_results)>0:
                 {"role": "system", "content": "You are an eloquent ai researcher, skilled in explaining complex concepts for a general audience"},
                 {"role": "user", "content": f"Summarise in a short paragraph, a general overview of what the papers have investigate, highlighting the most promising papers that relate to deep learning using quantum computing. Here is the text: {summary_data}"}])
         
-        print(summary_para.choices[0].message.content)
+        print(summary_para.choices[0].finish_reason)
+        print(summary_para.choices[0].message.role)
         message_to_send =f'{i+1} Papers Reviewed Today \n\n\n'+summary_para.choices[0].message.content+'\n\n\n\n'+bullet_summaries 
 
         try:
@@ -77,3 +79,4 @@ if len(all_results)>0:
             print("You've got mail!")
 else:
     print("No papers returned from Arxiv")
+
