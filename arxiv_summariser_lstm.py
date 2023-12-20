@@ -64,13 +64,13 @@ if len(all_results) > 0:
                     {
                         "role": "user",
                         "content": f"Using this format: '<b>Applicability to Quantum Deep Learning of time-series Research: </b>' Indicate whether the paper titled {all_results[i].title} with abstract {all_results[i].summary}\
-                    has a High, Medium or Low applicability. Add two empty lines using html <br> tags and then summarise the paper in 3 main concise bullet points, formatted using html unordered list items, under the heading '<b>Paper Summary: </b>'. Format everything using html tags so headings and bullet points render correctly in an html email",
+                    has a High, Medium or Low applicability, styling them as green, orange or red using html css inline. Add two empty lines using html <br> tags and then summarise the paper in 3 main concise bullet points, formatted using html unordered list items, under the heading '<b>Paper Summary: </b>'. Format everything using html tags so headings and bullet points render correctly in an html email",
                     },
                 ],
             )
 
             contents.append(
-                f"<br><br><br><br><b>Paper {j+1} Title:</b> "
+                f"<br><br><b>Paper {j+1} Title:</b> "
                 + all_results[i].title
                 + " <br><b> Link to paper: </b>"
                 + all_results[i].entry_id
@@ -83,7 +83,7 @@ if len(all_results) > 0:
                 + "</b><br>"
             )
             contents.append(completion.choices[0].message.content)
-            contents.append("<br><br><hr><br><br>")
+            contents.append("<hr>")
             print(
                 f"Paper {i} titled {all_results[i].title} reviewed as it was published on {all_results[i].published.date()}"
             )
@@ -118,9 +118,9 @@ if len(all_results) > 0:
         )
 
         message_to_send = (
-            f"<b>{j} Papers Reviewed Today</b> <br><br><br><b><u>Summary of Research Content</u></b><br><br>"
+            f"<b style='font-size: x-large'><u>Summary of Research Content</u></b><br><br><b>{j} Papers Reviewed Today</b><br><br>"
             + summary_para.choices[0].message.content
-            + "<br><br><br><br><b><u>Research papers:</u></b>"
+            + "<br><br><br><br><b style='font-size: x-large'><u>Research papers:</u></b>"
             + bullet_summaries
         )
 
