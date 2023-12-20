@@ -6,6 +6,7 @@ import os
 from email.utils import formataddr
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 
 
 def mail_msg(message):
@@ -30,6 +31,9 @@ def mail_msg(message):
     # terminating the session
     s.quit()
 
+
+with open("taxonomy.json") as f:
+    arxiv_dict = json.load(f)
 
 client = OpenAI()
 # Construct the default API client.
@@ -74,6 +78,8 @@ if len(all_results) > 0:
             contents.append(
                 "<br><b>Primary Arxiv Category: </b>"
                 + all_results[i].primary_category
+                + "  -  "
+                + arxiv_dict[all_results[i].primary_category]
                 + "</b><br>"
             )
             contents.append(completion.choices[0].message.content)
