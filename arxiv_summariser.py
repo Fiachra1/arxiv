@@ -32,7 +32,7 @@ search = arxiv.Search(
     max_results=20,
     sort_by=arxiv.SortCriterion.SubmittedDate
 )
-results = arxiv_client.results(search)
+all_results = arxiv_client.results(search)
 if len(all_results)>0:
     contents =[]
     j=0
