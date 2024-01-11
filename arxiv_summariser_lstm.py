@@ -41,7 +41,7 @@ arxiv_client = arxiv.Client()
 
 # Search for the 10 most recent articles matching the keyword "quantum."
 search = arxiv.Search(
-    query="cat:cs.AI AND ti:lstm",
+    query="ti:lstm",
     max_results=20,
     sort_by=arxiv.SortCriterion.SubmittedDate,
 )
